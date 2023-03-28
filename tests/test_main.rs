@@ -10,3 +10,13 @@ fn test_run() {
         .assert()
         .success();
 }
+
+/// A test that runs the binary to mark that I have given someone feedback.
+#[test]
+fn test_feedback() {
+    Command::cargo_bin(env!["CARGO_PKG_NAME"])
+        .unwrap()
+        .args(&["feedback", "Zaphod"])
+        .assert()
+        .success();
+}

@@ -22,4 +22,17 @@ fn main() -> Result<()> {
 struct Cli {
     #[command(flatten)]
     verbose: Verbosity,
+
+    #[command(subcommand)]
+    command: Command,
+}
+
+#[derive(Debug, Parser)]
+enum Command {
+    /// Register feedback for someone.
+    Feedback {
+        /// The person to register feedback for.
+        #[arg(value_name = "PERSON", required = true)]
+        person: String,
+    },
 }
