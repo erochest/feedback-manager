@@ -10,4 +10,3 @@
 Bump if there is none in the last four weeks. Smaller bump in there's only one.
 
 Otherwise, most recently received has lowest priority.
-
