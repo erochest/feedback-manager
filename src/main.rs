@@ -1,16 +1,15 @@
 use std::fs::File;
-use std::io::{Read, Write};
 use std::path::PathBuf;
 
 use clap::Parser;
 use clap_verbosity_flag::Verbosity;
 use env_logger;
 use human_panic::setup_panic;
-use serde::{Serialize, Deserialize};
 
-mod error;
+use feedback_manager::error::Result;
 
-use error::Result;
+use feedback_manager::feedback::FeedbackItem;
+use feedback_manager::io::{read_feedback, save_feedback};
 
 fn main() -> Result<()> {
     setup_panic!();
@@ -42,21 +41,6 @@ fn main() -> Result<()> {
     }
 
     Ok(())
-}
-
-// TODO: refactor this into a lib module with unit tests.
-
-fn read_feedback<R: Read>(data_file: R) -> Result<Vec<FeedbackItem>> {
-    serde_json::from_reader(data_file).map_err(Into::into)
-}
-
-fn save_feedback<W: Write>(data_file: W, feedback_data: &[FeedbackItem]) -> Result<()> {
-    serde_json::to_writer(data_file, feedback_data).map_err(Into::into)
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct FeedbackItem {
-    person: String,
 }
 
 #[derive(Debug, Parser)]
